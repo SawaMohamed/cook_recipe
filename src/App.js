@@ -1,10 +1,11 @@
-
+import React from 'react';
 import './App.css';
+import VerticalCarousel from './components/VerticalCarousel'
 
 function App() {
   return (
     <div className="App">
-    <h1>GroupOneRecipe</h1>
+      <VerticalCarousel/>
     </div>
   );
 }
