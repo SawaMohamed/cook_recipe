@@ -1,5 +1,19 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 .App {
   text-align: center;
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -42,9 +56,6 @@
   --orange: #f36c00;
 }
 
-* {
-  box-sizing: border-box;
-}
 
 body {
   font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
@@ -60,24 +71,41 @@ img {
   max-width: 100%;
 }
 
+div.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 80vh;
+}
+
 .outer-container {
-  max-width: 800px;
+  min-width: 100%;
+  min-height: 100%;
   margin: auto;
   display: flex;
+  justify-content: center;
+  align-content: center;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
 
 .outer-container > div {
   flex: 1;
-  padding: 20px;
+  padding: 1.5rem;
 }
 
 .outer-container .carousel-wrapper {
   background: var(--orange);
   display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  max-width: 25%;
+  min-height: 100%;
   flex-direction: column;
 }
 
@@ -101,10 +129,12 @@ img {
 }
 
 .carousel {
-  height: 100%;
+  min-height: 80%;
+  min-width: 80%;
   display: flex;
-  flex: 5;
   align-items: center;
+  justify-content: center;
+  align-content: center;
   color: var(--white);
 }
 
@@ -127,16 +157,26 @@ img {
 }
 
 .slides {
-  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+
+min-height: 100%;
   flex: 1;
-  width: 100%;
+  max-width: 100%;
   overflow: hidden;
 }
 
 .carousel-inner {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
   position: relative;
-  max-height: 250px;
-  height: 250px;
+  max-width: 100%;
+  min-height: 40vh;
 }
 
 .carousel-inner::before,
@@ -144,8 +184,8 @@ img {
   content: "";
   z-index: 1;
   position: absolute;
-  width: 100%;
-  height: 110px;
+  min-width: 100%;
+  min-height:60%;
   pointer-events: none;
 }
 
@@ -168,16 +208,45 @@ img {
 }
 
 .carousel-item {
-  position: absolute;
   background: none;
   border: none;
-  padding: 0;
-  margin: 0;
+  padding:  0;
+  margin: .3rem 0;
   opacity: 0;
-  top: 112px;
   transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 .carousel-item.visible {
   opacity: 1;
+}
+
+/* recipe-component */
+
+div.recipe-component{
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100%;
+  min-width: 100%;
+  color: black;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+div.recipe-component >h2{
+  margin-bottom: 2rem;
+  font-size: xx-large;
+}
+
+div.recipe-component::after{
+  content: "";
+  position:absolute ;
+  top: 0;
+  left: 0;
+  background: rgba(207, 200, 200, 0.474);
+  min-height: 100%;
+  min-width: 100%;
 }
