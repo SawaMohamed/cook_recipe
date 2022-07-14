@@ -12,12 +12,13 @@ const VerticalCarousel = () => {
       console.error(error)
     }
   }
-  
+  console.log(data)
   useEffect(() => {
     getData()
-    console.log(data)
+    
   }, [])
   return <div>VerticalCarousel</div>
 }
+
 
 export default VerticalCarousel

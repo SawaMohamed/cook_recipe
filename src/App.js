@@ -5,7 +5,7 @@ import VerticalCarousel from './components/VerticalCarousel'
 function App() {
   return (
     <div className="App">
-      <VerticalCarousel/>
+      <VerticalCarousel />
     </div>
   );
 }
