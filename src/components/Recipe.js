@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+
 
 const Recipe = props => {
-  const [img, setImg] = useState({})
-  const { currentImg } = props
-  const { name, imageUrl, ingredients, steps } = currentImg
-  // const { fields } = imageUrl
+  const [img, setImg] = useState(props.currentRecipe.imageUrl)
+  const [name, setName] = useState(props.currentRecipe.name)
+
   useEffect(() => {
-    setImg(imageUrl && imageUrl)
-    props.func(imageUrl)
-  }, [imageUrl])
-  // console.log(img.fields && img.fields.file.url)
+    setImg(props.currentRecipe.imageUrl)
+    setName(props.currentRecipe.name)
+  }, [props])
 
   return (
     <>
       <div
         className='recipe-component'
         style={{
-          backgroundImage: `url(${img.fields && img.fields.file.url})`,
+          backgroundImage: `url(${img && img.fields.file.url})`,
         }}
       >
-        <h2>{name}</h2>
+        <h2>
+          <Link to='/' style={{ textDecoration: 'none' }}>
+            {name}
+          </Link>
+        </h2>
       </div>
     </>
   )

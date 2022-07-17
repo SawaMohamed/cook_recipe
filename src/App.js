@@ -2,37 +2,39 @@ import React, { useState, useEffect } from 'react'
 import './App.css'
 import VerticalCarousel from './components/VerticalCarousel'
 
-function App() {
-  const [bk, setBk] = useState()
-  const [url, setUrl] = useState(
-    '//images.ctfassets.net/8shhe87vbcl2/6qcUzzVC3l1v1KIwWp4JvZ/2c4e766bcccf581fb833cea17e4089e6/picVfzLZo.jpg'
-  )
-  //to get value from search bar
+import { BrowserRouter } from 'react-router-dom'
 
-  const pull_bg_image = img => {
-    setBk(img)
+function App() {
+  const [current, setCurrent] = useState({})
+  const [img, setImg] = useState({})
+  const [fields, setFields] = useState({})
+  const [file, setFile] = useState({})
+
+  const pull_bg_image = data => {
+    setCurrent(data && data)
+    setImg(current && current.imageUrl)
+    setFields(img && img.fields)
+    setFile(fields && fields.file)
     return
   }
 
+
   useEffect(() => {
     pull_bg_image()
-    return () => {
-      if (bk) {
-        console.log(bk.fields.file.url)
-        setUrl(bk.fields.file.url)
-      }
-    }
-  }, [bk])
+  }, [])
+
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${url && url})`,
-      }}
-      className='App'
-    >
-      <VerticalCarousel func={pull_bg_image} />
-    </div>
+    <BrowserRouter>
+      <div
+        style={{
+          backgroundImage: `url(${file && file.url})`,
+        }}
+        className='App'
+      >
+        <VerticalCarousel func={pull_bg_image} />
+      </div>
+    </BrowserRouter>
   )
 }
 
