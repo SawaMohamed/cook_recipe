@@ -1,66 +1,91 @@
 import React, { useState, useEffect } from 'react'
-import { LINK, Routes, Route } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { client } from '../client'
 import cn from 'classnames'
 import Recipe from './Recipe'
+import Navigation from './Navigation'
+import Ingredients from './Ingredients'
+import Steps from './Steps'
 import { ReactComponent as Next } from '../assets/down.svg'
 import { ReactComponent as Prev } from '../assets/up.svg'
-import Nav from './Nav'
-import Ingredients from './Ingredients'
-import Steps from './Nav'
-const VerticalCarousel = (props) => {
-  const [data, setData] = useState([])
-  const [bk, setBk] = useState("")
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [currentImg, setCurrentImg] = useState({})
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-  
-  
+const VerticalCarousel = props => {
+  const [data, setData] = useState([])
+  const [searchValue, setSearchValue] = useState('')
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [currentRecipe, setCurrentRecipe] = useState({})
+  const [bk, setBk] = useState({})
+
   const getData = async () => {
     try {
       let arr = []
       const { items } = await client.getEntries()
       items.map(i => arr.push(i.fields))
       setData(arr)
-      // setCurrentImg(arr[activeIndex + 1])
     } catch (error) {
       console.error(error)
     }
-     
   }
 
-    //to get value from search bar 
-    const pull_bg_image = img => {
-      setBk(img)
-      return
-    }
+  props.func(data[activeIndex])
+  const returnBG = () => props.func(data[activeIndex])
+
+  // pull search value from search bar
+  const get_search = data => {
+    setSearchValue(data)
+    console.log(data)
+    return
+  }
+
+  // find value matching search bar from the data array
+  const findSearchFomData = () => {
+    let arr = []
+    arr = data.filter(i =>
+      i.name.toLowerCase().includes(searchValue.toLowerCase())
+    )
+    setData(arr)
+  }
+
   useEffect(() => {
     getData()
-
+    setCurrentRecipe(data[activeIndex])
+    returnBG()
   }, [])
+
   useEffect(() => {
-    setCurrentImg(data[activeIndex + 1])
+    setCurrentRecipe(data[activeIndex])
+    setBk(currentRecipe && currentRecipe)
+    returnBG()
   }, [data])
-  
+
   useEffect(() => {
-    setCurrentImg(data[activeIndex])
-    pull_bg_image()
-    props.func(bk)
+    setCurrentRecipe(data[activeIndex])
+    returnBG()
   }, [activeIndex])
+
+  useEffect(() => {
+    findSearchFomData()
+  }, [searchValue])
+  useEffect(() => {
+    // findSearchFomData()
+    getData()
+  }, [searchValue.length === 0])
 
   /*Import Vertical Carousel*/
 
   // Used to determine which items appear above the active item
   const halfwayIndex = Math.ceil(data.length / 2)
- 
+
   // Usd to determine the height/spacing of each item
-  const itemHeight = 52
+  const itemHeight = Math.floor(data.length * 4)
 
   // Used to determine at what point an item is moved from the top to the bottom
-  const shuffleThreshold = halfwayIndex * itemHeight
+  const shuffleThreshold = Math.floor(halfwayIndex * itemHeight)
 
   // Used to determine which items should be visible. this prevents the "ghosting" animation
-  const visibleStyleThreshold = shuffleThreshold / 2
+  const visibleStyleThreshold = Math.floor(shuffleThreshold / 2)
 
   const determinePlacement = itemIndex => {
     // If these match, the item is active
@@ -104,69 +129,81 @@ const VerticalCarousel = (props) => {
   }
   /*Import Vertical Carousel*/
 
-  
   return (
     <div className='container'>
-      <section className='outer-container'>
-        {/* Start of the Orange container */}
-        <div className='carousel-wrapper'>
-          <button
-            type='button'
-            className='carousel-button prev'
-            onClick={() => handleClick('prev')}
-          >
-            <Prev />
-            
-          </button>
+      <Navigation func={get_search} />
+      <>
+        <section className='outer-container'>
+          {/* Start of the Orange container */}
+          <div className='carousel-wrapper'>
+            <button
+              type='button'
+              className='carousel-button prev'
+              onClick={() => handleClick('prev')}
+            >
+              <Link to='/'>
+                <Prev />
+              </Link>
+            </button>
 
-          <div className='carousel'>
-            <div className='slides'>
-              <div className='carousel-inner'>
-                {data.map((item, i) => (
-                  <button
-                    type='button'
-                    onClick={() => setActiveIndex(i)}
-                    className={cn('carousel-item', {
-                      active: activeIndex === i,
-                      visible:
-                        Math.abs(determinePlacement(i)) <=
-                        visibleStyleThreshold,
-                    })}
-                    key={i}
-                    style={{
-                      transform: `translateY(${determinePlacement(i)}px)`,
-                    }}
-                  >
-                    {item.name}
-                  </button>
-                ))}
+            <div className='carousel'>
+              <div className='slides'>
+                <div className='carousel-inner'>
+                  {data.map((item, i) => (
+                    <button
+                      type='button'
+                      onClick={() => setActiveIndex(i)}
+                      className={cn('carousel-item', {
+                        active: activeIndex === i,
+                        visible:
+                          Math.abs(determinePlacement(i)) <=
+                          visibleStyleThreshold,
+                      })}
+                      key={i}
+                      style={{
+                        transform: `translateY(${determinePlacement(i)}px)`,
+                      }}
+                    >
+                      <Link to='/'>{item.name}</Link>
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
 
-          <button
-            type='button'
-            className='carousel-button next'
-            onClick={() => handleClick('next')}
-          >
-           
-            <Next />
-          </button>
-        </div>
-        {/* End of Orange container */}
-        <div className='content'>
-          <Routes>
-            <Route path='/ingredients' element={<Ingredients/>}/>
-            <Route path='/steps' element={<Steps/>}/>
-            <Route path='/' element={currentImg && <Recipe func={pull_bg_image} currentImg={currentImg} />}/>
-          </Routes>
-        
-          {currentImg && <Nav func={pull_bg_image} currentImg={currentImg} />}
-        </div>
-      </section>
+            <button
+              type='button'
+              className='carousel-button next'
+              onClick={() => handleClick('next')}
+            >
+              <Link to='/'>
+                <Next />
+              </Link>
+            </button>
+          </div>
+          {/* End of Orange container */}
+          <div className='content'>
+            <Routes>
+              {currentRecipe && (
+                <Route
+                  path='/'
+                  element={<Recipe currentRecipe={currentRecipe} />}
+                />
+              )}
+              <Route
+                path='/ingredients'
+                element={<Ingredients data={currentRecipe && currentRecipe} />}
+              />
+              <Route
+                path='/steps'
+                element={<Steps data={currentRecipe && currentRecipe} />}
+              />
+            </Routes>
+          </div>
+        </section>
+      </>
     </div>
   )
 }
-
 
 export default VerticalCarousel
