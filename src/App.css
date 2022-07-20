@@ -2,7 +2,14 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: cursive;
 }
+
+:root {
+  --color: rgb(240, 63, 234);
+  --background: rgb(245, 247, 229);
+}
+
 .App {
   text-align: center;
   background-position: center;
@@ -39,7 +46,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--color);
 }
 
 @keyframes App-logo-spin {
@@ -51,14 +58,8 @@
   }
 }
 
-:root {
-  --white:  hsl(27, 51%, 79%);
-  --orange: hsl(27, 100%, 48%);
-}
-
-
 body {
-  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -71,7 +72,59 @@ img {
   max-width: 100%;
 }
 
-div.container{
+/* nav bar & search start */
+nav.navbar {
+  min-width: 100%;
+  background: var(--background);
+  border-radius: 0.7rem 0.7rem 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem 1rem;
+}
+
+nav.navbar input.search-input {
+  padding: 0.1rem;
+  color: var(--color);
+  font-size: larger;
+  border: 1px var(--color) solid;
+  border-radius: 0.2rem 0 0 0.2rem;
+  border-right: none;
+}
+nav.navbar input.search-input:focus {
+  border-right: none;
+}
+nav.navbar button.search-button {
+  padding: 0.1rem;
+  color: var(--color);
+  background-color: var(--background);
+  font-size: larger;
+  border: 1px var(--color) solid;
+  border-radius: 0 0.2rem 0.2rem 0;
+  border-left: none;
+}
+
+ul.nav-list {
+  list-style: none;
+  width: 30%;
+  margin-right: 2rem;
+  font-size: larger;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+ul.nav-list li {
+  color: var(--color);
+  font-weight: bolder;
+}
+ul.nav-list li:hover {
+  transform: scale(1.1);
+}
+/* nav bar & search end */
+
+div.container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -87,9 +140,8 @@ div.container{
   display: flex;
   justify-content: center;
   align-content: center;
-  border: 1px solid rgb(40, 38, 38);
-  border-radius: 10px;
-  box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 0 0 0.7rem 0.7rem;
+  box-shadow: 3px 6px 5px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
 
@@ -100,13 +152,29 @@ div.container{
 
 .outer-container .carousel-wrapper {
   background: var(--orange);
+  position: relative;
+  background: no-repeat
+    url('https://images.unsplash.com/photo-1590394017390-add3e9922c35?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80');
+  background-size: cover;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
   max-width: 25%;
-  min-height: 100%;
+  max-height: 100%;
   flex-direction: column;
+}
+
+.outer-container .carousel-wrapper::after {
+  content: '';
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(84, 78, 78, 0.474);
+  min-height: 100%;
+  min-width: 100%;
 }
 
 .outer-container .carousel-wrapper p,
@@ -118,13 +186,14 @@ div.container{
 }
 
 .outer-container .content {
-  background: var(--white);
+  background: rgb(245, 247, 229);
+  min-height: 100%;
 }
 
 .leading-text {
   display: flex;
   align-items: center;
-  height: 100%;
+  min-height: 100%;
   margin-right: 6px;
 }
 
@@ -135,17 +204,18 @@ div.container{
   align-items: center;
   justify-content: center;
   align-content: center;
-  color: var(--white);
+  color: var(--color);
 }
 
 .carousel-button {
   display: flex;
+  z-index: 100;
   align-self: center;
   padding: 10px;
   max-width: 50px;
   border-radius: 30px;
-  background: var(--orange);
-  border: 2px solid var(--white);
+  background: var(--color);
+  border: 2px solid var(--background);
 }
 
 .carousel-button svg {
@@ -153,7 +223,7 @@ div.container{
   width: 26px;
 }
 .carousel-button path {
-  fill: var(--white);
+  fill: var(--background);
 }
 
 .slides {
@@ -162,7 +232,7 @@ div.container{
   justify-content: center;
   align-content: center;
 
-min-height: 100%;
+  min-height: 100%;
   flex: 1;
   max-width: 100%;
   overflow: hidden;
@@ -170,27 +240,28 @@ min-height: 100%;
 
 .carousel-inner {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
   align-content: center;
   position: relative;
   max-width: 100%;
-  min-height: 40vh;
+  min-height: 50vh;
+  overflow: hidden;
 }
 
-.carousel-inner::before,
+/* .carousel-inner::before,
 .carousel-inner::after {
-  content: "";
+  content: '';
   z-index: 1;
   position: absolute;
   min-width: 100%;
-  min-height:60%;
+  min-height: 100%;
   pointer-events: none;
 }
 
 .carousel-inner::before {
-  top: 0;
+  top: -4rem;
   background: linear-gradient(
     0deg,
     hsla(0, 0%, 100%, 0) 0%,
@@ -199,19 +270,24 @@ min-height: 100%;
 }
 
 .carousel-inner::after {
-  bottom: 0;
+  bottom: -4rem;
   background: linear-gradient(
     0deg,
     hsla(27, 100%, 48%, 1) 0%,
     hsla(0, 0%, 100%, 0) 100%
   );
-}
+} */
 
 .carousel-item {
   background: none;
+  z-index: 100;
+  color: rgb(240, 63, 234);
+  /* color: var(--color); */
+  font-weight: bold;
+  font-size: x-large ;
   border: none;
-  padding:  0;
-  margin: .3rem 0;
+  padding: 0;
+  margin: 0.3rem 0;
   opacity: 0;
   transition: transform 0.4s ease, opacity 0.4s ease;
 }
@@ -222,45 +298,48 @@ min-height: 100%;
 
 /* recipe-component */
 
-div.recipe-component{
+div.recipe-component {
   position: relative;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+
   min-height: 100%;
   min-width: 100%;
-  color: black;
-  text-align: center;
+  /* color: black; */
+  /* text-align: center; */
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  margin: none;
 }
 
-div.recipe-component >h2{
+div.recipe-component > h2 {
+  z-index: 100;
+  border: 1px var(--color) solid;
+  border-radius: 0.7rem;
+  padding: 0.3rem 1rem;
+  background: var(--background);
+  box-shadow: 3px 6px 5px rgba(0, 0, 0, 0.5);
+  color: var(--color);
   margin-bottom: 2rem;
   font-size: xx-large;
 }
 
-div.recipe-component::after{
-  content: "";
-  position:absolute ;
+div.recipe-component > h2:hover,
+.carousel-button:hover {
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.5);
+  transform: scale(1.02);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+div.recipe-component::after {
+  content: '';
+  position: absolute;
   top: 0;
   left: 0;
-  background: rgba(207, 200, 200, 0.474);
+  background: rgba(0, 0, 0, 0.3);
   min-height: 100%;
   min-width: 100%;
-}
-.btn{
-  background-color:antiquewhite;
-  border-color:#fff;
-  cursor: pointer;
-  font-size: 12px;
-  border-radius: 5px;
-  
-   
-  
-}
-.btn:hover {
-  color: rgb(50, 16, 163);
-   
 }
