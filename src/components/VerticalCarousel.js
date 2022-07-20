@@ -8,7 +8,7 @@ import Navigation from './Navigation'
 import { ReactComponent as Next } from '../assets/down.svg'
 import { ReactComponent as Prev } from '../assets/up.svg'
 import Steps from './Steps'
-// import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const VerticalCarousel = props => {
   const [data, setData] = useState([])
