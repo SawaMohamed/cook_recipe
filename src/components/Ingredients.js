@@ -1,8 +1,12 @@
 import React from 'react'
-
-const Ingredients = () => {
+import { Link } from 'react-router-dom'
+const Ingredients = ({data}) => {
+console.log(data);
   return (
-    <div>Ingredients</div>
+    <div>
+      Ingredients
+      <Link to='/steps'>Steps</Link>
+    </div>
   )
 }
 
