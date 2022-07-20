@@ -20,7 +20,7 @@ const Recipe = props => {
         }}
       >
         <h2>
-          <Link to='/' style={{ textDecoration: 'none' }}>
+          <Link to='/ingredients' style={{ textDecoration: 'none' }}>
             {name}
           </Link>
         </h2>

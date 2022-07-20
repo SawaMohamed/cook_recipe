@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { Route, Routes } from 'react-router-dom'
 import { client } from '../client'
 import cn from 'classnames'
 import Recipe from './Recipe'
 import Navigation from './Navigation'
+import Ingredients from './Ingredients'
+import Steps from './Steps'
 import { ReactComponent as Next } from '../assets/down.svg'
 import { ReactComponent as Prev } from '../assets/up.svg'
 // import 'bootstrap/dist/css/bootstrap.min.css'
@@ -37,12 +40,14 @@ const VerticalCarousel = props => {
   }
 
   // find value matching search bar from the data array
-  const findSearchFomData=()=>{
-    let arr=[]
-    arr=data.filter(i=>i.name.toLowerCase().includes(searchValue.toLowerCase()))
+  const findSearchFomData = () => {
+    let arr = []
+    arr = data.filter(i =>
+      i.name.toLowerCase().includes(searchValue.toLowerCase())
+    )
     setData(arr)
   }
-  
+
   useEffect(() => {
     getData()
     setCurrentRecipe(data[activeIndex])
@@ -62,15 +67,12 @@ const VerticalCarousel = props => {
 
   useEffect(() => {
     findSearchFomData()
-  
   }, [searchValue])
   useEffect(() => {
     // findSearchFomData()
     getData()
-  
-  }, [searchValue.length===0])
-  
-  
+  }, [searchValue.length === 0])
+
   /*Import Vertical Carousel*/
 
   // Used to determine which items appear above the active item
@@ -139,7 +141,9 @@ const VerticalCarousel = props => {
               className='carousel-button prev'
               onClick={() => handleClick('prev')}
             >
-              <Prev />
+              <Link to='/'>
+                <Prev />
+              </Link>
             </button>
 
             <div className='carousel'>
@@ -160,7 +164,7 @@ const VerticalCarousel = props => {
                         transform: `translateY(${determinePlacement(i)}px)`,
                       }}
                     >
-                      {item.name}
+                      <Link to='/'>{item.name}</Link>
                     </button>
                   ))}
                 </div>
@@ -172,7 +176,9 @@ const VerticalCarousel = props => {
               className='carousel-button next'
               onClick={() => handleClick('next')}
             >
-              <Next />
+              <Link to='/'>
+                <Next />
+              </Link>
             </button>
           </div>
           {/* End of Orange container */}
@@ -184,6 +190,14 @@ const VerticalCarousel = props => {
                   element={<Recipe currentRecipe={currentRecipe} />}
                 />
               )}
+              <Route
+                path='/ingredients'
+                element={<Ingredients data={currentRecipe && currentRecipe} />}
+              />
+              <Route
+                path='/steps'
+                element={<Steps data={currentRecipe && currentRecipe} />}
+              />
             </Routes>
           </div>
         </section>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './App.css'
 import VerticalCarousel from './components/VerticalCarousel'
 
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 function App() {
   const [current, setCurrent] = useState({})
@@ -18,11 +18,9 @@ function App() {
     return
   }
 
-
   useEffect(() => {
     pull_bg_image()
   }, [])
-
 
   return (
     <BrowserRouter>

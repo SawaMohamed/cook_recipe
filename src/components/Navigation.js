@@ -29,8 +29,12 @@ const Navigation = props => {
       </form>
 
       <ul className='nav-list'>
-        <li>Ingredients</li>
-        <li>Steps</li>
+        <li>
+          <Link to='/ingredients'>Ingredients</Link>
+        </li>
+        <li>
+        <Link to='/steps'>Steps</Link>
+        </li>
       </ul>
     </nav>
   )
