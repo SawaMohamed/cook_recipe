@@ -205,7 +205,7 @@ const Edit = ({ data }) => {
           className='search-input'
           aria-label='text'
           value={url}
-          onInput={e => setName(e.target.value)}
+          onInput={e => setUrl(e.target.value)}
         />
 
         <button className='search-button' type='submit'>

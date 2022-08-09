@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 // import { Link } from 'react-router-dom'
-import { Route, Routes,Link } from 'react-router-dom'
+import { Route, Routes, Link } from 'react-router-dom'
 // import { client } from '../client'
 import cn from 'classnames'
 import Recipe from './Recipe'
@@ -32,9 +32,11 @@ const VerticalCarousel = props => {
   const [fromSearchBar, setFromSearchBar] = useState(false)
   const [id, setId] = useState(Number)
   // get all data from contentful filter them and return ass json
+
   //   const fromContentful = arr => {
   // let newArr=[]
   // arr.map( (i)=> {
+  //   // just change the shape od data accordingly
   //   newArr.push( {
   //       name: i.name,
   //       steps: i.steps,
@@ -51,9 +53,9 @@ const VerticalCarousel = props => {
   //     let arr = []
   //     const { items } = await client.getEntries()
   //     items.map(i => arr.push(i.fields))
-  //     setData(arr)
+  //     // setData(arr)
 
-  //     // fromContentful(arr)
+  //     fromContentful(arr)
   //   } catch (error) {
   //     console.error(error)
   //   }
@@ -209,7 +211,6 @@ const VerticalCarousel = props => {
     }
   }
 
-  
   const handleClick = direction => {
     setActiveIndex(prevIndex => {
       if (direction === 'next') {
@@ -227,20 +228,19 @@ const VerticalCarousel = props => {
     })
   }
   /*Import Vertical Carousel*/
- 
-  
+
   return (
     <div className='container'>
       <div className='options'>
-        <Link to="/create">
-        <Button className='recipe-btn create'>
-          <FaPlus />
-        </Button>
+        <Link to='/create'>
+          <Button className='recipe-btn create'>
+            <FaPlus />
+          </Button>
         </Link>
-        <Link to="/edit">
-        <Button className='recipe-btn edit'>
-          <FaEdit />
-        </Button>
+        <Link to='/edit'>
+          <Button className='recipe-btn edit'>
+            <FaEdit />
+          </Button>
         </Link>
         <Button onClick={() => deleteRecipe(id)} className='recipe-btn delete'>
           <FaTrashAlt />
@@ -318,7 +318,10 @@ const VerticalCarousel = props => {
               />
               <Route path='/steps' element={<Steps steps={steps && steps} />} />
               <Route path='/create' element={<Create />} />
-              <Route path='/edit' element={<Edit data={currentRecipe&&currentRecipe } />} />
+              <Route
+                path='/edit'
+                element={<Edit data={currentRecipe && currentRecipe} />}
+              />
             </Routes>
           </div>
         </section>
